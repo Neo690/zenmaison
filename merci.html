@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merci pour votre commande — ZenMaison</title>
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #faf8f4; color: #1f2a24; display: grid; place-items: center; min-height: 100vh; margin: 0; text-align: center; padding: 20px; }
+    .carte { background: #fff; border: 1px solid #e6e1d8; border-radius: 16px; padding: 40px 34px; max-width: 460px; }
+    .carte h1 { font-size: 1.6rem; margin: 14px 0 8px; }
+    .carte p { color: #6b7770; }
+    .badge { font-size: 3rem; }
+    .btn { display: inline-block; background: #2f6b4f; color: #fff; padding: 12px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 18px; }
+    #recap { margin: 16px 0; text-align: left; font-size: .92rem; color: #444; }
+    #recap div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #eee; }
+  </style>
+</head>
+<body>
+  <div class="carte">
+    <div class="badge">🎉</div>
+    <h1>Merci pour votre commande !</h1>
+    <p>Un email de confirmation arrive. Votre colis sera expédié sous 24 à 48 h —
+       le suivi vous sera envoyé par email.</p>
+    <div id="recap"></div>
+    <a class="btn" href="index.html">Continuer mes achats</a>
+  </div>
+  <script>
+    // Récapitule le panier sauvegardé, puis le nettoie
+    try {
+      const panier = JSON.parse(localStorage.getItem('zenmaison_panier_v1') || '{}');
+      const recap = document.getElementById('recap');
+      const n = Object.values(panier).reduce((a, b) => a + b, 0);
+      recap.innerHTML = n
+        ? `<strong>${n} article${n > 1 ? 's' : ''}</strong> en route vers chez vous 📦`
+        : 'À très bientôt sur ZenMaison !';
+      localStorage.removeItem('zenmaison_panier_v1');
+    } catch (e) {}
+  </script>
+</body>
+</html>
